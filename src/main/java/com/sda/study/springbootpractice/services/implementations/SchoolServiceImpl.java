@@ -66,6 +66,8 @@ public class SchoolServiceImpl implements SchoolService {
         School school = findSchoolById(id);
         // schoolRepository.delete(school); // To delete the record completely from the repo
         school.setActive(false);
+
+
         schoolRepository.saveAndFlush(school);
     }
 

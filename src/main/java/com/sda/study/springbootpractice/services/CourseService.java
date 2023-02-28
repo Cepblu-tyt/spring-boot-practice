@@ -2,6 +2,7 @@ package com.sda.study.springbootpractice.services;
 
 import com.sda.study.springbootpractice.exceptions.CourseNotFoundException;
 import com.sda.study.springbootpractice.models.Course;
+import com.sda.study.springbootpractice.models.School;
 
 import java.util.List;
 
@@ -39,6 +40,13 @@ public interface CourseService {
      * @return a list of Course
      */
     List<Course> findAllCourses();
+    /**
+     * To find all courses by school
+     *
+     * @param school
+     * @return a list of Course
+     */
+    List<Course> findAllCoursesBySchool(School school);
 
     /**
      * To update an existing Course
