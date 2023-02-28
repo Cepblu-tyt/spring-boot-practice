@@ -1,8 +1,11 @@
 package com.sda.study.springbootpractice.components;
 
 import com.sda.study.springbootpractice.exceptions.SchoolNotFoundException;
+import com.sda.study.springbootpractice.exceptions.StudentNotFoundException;
 import com.sda.study.springbootpractice.models.School;
+import com.sda.study.springbootpractice.models.Student;
 import com.sda.study.springbootpractice.services.SchoolService;
+import com.sda.study.springbootpractice.services.StudentService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Component;
 public class DataInit {
     @Autowired
     private SchoolService schoolService;
+    private StudentService studentService;
 
     @PostConstruct
     public void init() {
@@ -36,4 +40,21 @@ public class DataInit {
             schoolService.createSchool(school);
         }
     }
+
+    private void initStudent() {
+        System.out.println("Starting Student initialization...");
+        Student student = new Student();
+        student.setName(student.getName());
+        student.setAge(student.getAge());
+        student.setId(student.getId());
+
+        try {
+            Student searchStudent = studentService.findStudentByName(student.getName());
+            System.out.println("Cannot pre-initialize student: " + student.getName());
+        } catch (StudentNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
