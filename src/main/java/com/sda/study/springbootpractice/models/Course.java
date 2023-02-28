@@ -1,24 +1,32 @@
 package com.sda.study.springbootpractice.models;
 
-import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
- * @author Sergei Oksanen
- * @Date 2/22/2023
+ * Course model
+ *
+ * @author Vinod John
+ * @Date 22.02.2023
  */
+
 @Entity
 @Data
-public class Course {
+@EqualsAndHashCode(callSuper = true)
+public class Course extends Auditable<String> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
@@ -27,4 +35,5 @@ public class Course {
     @OneToOne(cascade = CascadeType.MERGE)
     private School school;
 
+    private boolean isActive;
 }
