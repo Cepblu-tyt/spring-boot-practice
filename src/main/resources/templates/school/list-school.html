@@ -12,6 +12,27 @@
     <div class="container-fluid">
         <div th:replace="fragments/navbar"></div>
 
+        <div class="container">
+            <table class="table">
+                <h1 class="fw-bold">School list</h1>
+                <thead>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                </thead>
+                <tbody>
+                <tr th:each="school: ${schools}" >
+                    <th scope="row"><span th:text="${school.id}"</span> </th>
+                    <td th:text="${school.name}"></td>
+                    <td th:text="${school.address}"></td>
+                    <td th:text="${school.phone}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
 
 
     </div>
