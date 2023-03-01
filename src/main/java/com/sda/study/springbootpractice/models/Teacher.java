@@ -30,7 +30,7 @@ public class Teacher extends Auditable<String> implements Serializable {
 
     private String email;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<Course> specializedCourses;
 
     private boolean isActive;

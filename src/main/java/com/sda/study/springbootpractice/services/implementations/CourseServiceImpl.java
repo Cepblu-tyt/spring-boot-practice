@@ -57,7 +57,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> findAllCoursesBySchool(School school) {
-        return null;
+        return courseRepository.findAllBySchool(school);
     }
 
     @Override
@@ -72,8 +72,6 @@ public class CourseServiceImpl implements CourseService {
         Course course = findCourseById(id);
         // courseRepository.delete(course); // To delete the record completely from the repo
         course.setActive(false);
-
-
         courseRepository.saveAndFlush(course);
     }
 

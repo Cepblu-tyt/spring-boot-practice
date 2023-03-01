@@ -55,16 +55,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updateStudent(Student Student) throws StudentNotFoundException {
-        if(findStudentById(Student.getId()) != null) {
-            studentRepository.saveAndFlush(Student);
+    public void updateStudent(Student student) throws StudentNotFoundException {
+        if(findStudentById(student.getId()) != null) {
+            studentRepository.saveAndFlush(student);
         }
     }
 
     @Override
     public void deleteStudentById(Long id) throws StudentNotFoundException {
         Student student = findStudentById(id);
-        // StudentRepository.delete(Student); // To delete the record completely from the repo
+        // studentRepository.delete(student); // To delete the record completely from the repo
         student.setActive(false);
         studentRepository.saveAndFlush(student);
     }
@@ -76,4 +76,3 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.saveAndFlush(student);
     }
 }
-

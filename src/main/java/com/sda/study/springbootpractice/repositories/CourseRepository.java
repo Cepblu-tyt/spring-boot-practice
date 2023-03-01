@@ -15,7 +15,8 @@ import java.util.Optional;
  */
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course,Long> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByName(String name);
+
     List<Course> findAllBySchool(School school);
- }
+}

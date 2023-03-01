@@ -40,10 +40,11 @@ public interface CourseService {
      * @return a list of Course
      */
     List<Course> findAllCourses();
+
     /**
      * To find all courses by school
      *
-     * @param school
+     * @param school School
      * @return a list of Course
      */
     List<Course> findAllCoursesBySchool(School school);
@@ -69,4 +70,3 @@ public interface CourseService {
      */
     void restoreCourseById(Long id) throws CourseNotFoundException;
 }
-
