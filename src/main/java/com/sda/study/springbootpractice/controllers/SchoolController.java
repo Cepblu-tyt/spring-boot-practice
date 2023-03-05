@@ -1,5 +1,6 @@
 package com.sda.study.springbootpractice.controllers;
 
+import com.sda.study.springbootpractice.exceptions.CourseNotFoundException;
 import com.sda.study.springbootpractice.exceptions.SchoolNotFoundException;
 import com.sda.study.springbootpractice.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 /**
  * @author Sergei Oksanen
@@ -30,25 +32,43 @@ public class SchoolController {
     }
 
     @GetMapping("/{id}")
-    public String showSchoolViewPage(@PathVariable Long id, Model model) {
+    public String showSchoolViewPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("school", schoolService.findSchoolById(id));
             return "school/view-school";
         } catch (SchoolNotFoundException e) {
-            throw new RuntimeException(e);
+            return handleException(redirectAttributes, e);
         }
     }
+
     @GetMapping("/delete/{id}")
-    public String deleteSchool(@PathVariable Long id, RedirectAttributes redirectAttributes){
+    public String deleteSchool(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             schoolService.deleteSchoolById(id);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("School(id=%d) deleted successfully",id));
-            redirectAttributes.addFlashAttribute("messageType","success");
+            redirectAttributes.addFlashAttribute("message", String.format("School #%d deleted successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/school";
         } catch (SchoolNotFoundException e) {
-            throw new RuntimeException(e);
+            return handleException(redirectAttributes, e);
         }
     }
-}
 
+    @GetMapping("/restore/{id}")
+    public String restoreSchool(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            schoolService.restoreSchoolById(id);
+            redirectAttributes.addFlashAttribute("message", String.format("School #%d restored successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/school";
+        } catch (SchoolNotFoundException e) {
+            return handleException(redirectAttributes, e);
+        }
+    }
+
+    // PRIVATE METHODS //
+    private String handleException(RedirectAttributes redirectAttributes, Exception e) {
+        redirectAttributes.addFlashAttribute("message", e.getLocalizedMessage());
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/school";
+    }
+}
