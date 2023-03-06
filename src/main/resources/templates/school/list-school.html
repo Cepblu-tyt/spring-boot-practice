@@ -24,6 +24,8 @@
             No schools found!
         </div>
 
+        <a class="btn btn-success" role="button" th:href="@{/school/create-school.html}"> Create </a>
+
         <table class="table table-bordered" th:if="${schools.size() > 0}">
             <thead>
             <th scope="col">#</th>
@@ -43,6 +45,10 @@
                 <td th:text="${school.address}"></td>
                 <td th:text="${school.phone}"></td>
                 <td>
+                    <a class="btn btn-danger" role="button" th:href="@{/school/update/{id}(id=${school.id})}"
+                    th:if="${school.isActive()}">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
                     <a class="btn btn-danger" role="button" th:href="@{/school/delete/{id}(id=${school.id})}"
                        th:if="${school.isActive()}">
                         <i class="bi bi-trash2-fill"></i>
